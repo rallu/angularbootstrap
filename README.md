@@ -18,7 +18,9 @@ angular-translate
 Create a project folder and then:
 
     $ git init
+    $ git commit -m "Initial commit"
     $ git remote add -f angularbootstrap git@github.com:rallu/angularbootstrap.git
+    $ git pull angularbootstrap master
 
 If you want to change from default **myapp** name you need to change mainmodulename
 variable in **config.json**
