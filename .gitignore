@@ -1,0 +1,7 @@
+nbproject/private/
+public_html/bower/
+node_modules/
+public_html/css/
+.elasticbeanstalk/
+npm-debug.log
+release/
