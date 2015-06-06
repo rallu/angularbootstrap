@@ -37,6 +37,7 @@ Before first use:
     $ bower install
 
 Then:
+
     $ gulp
 
 ## Releasing
