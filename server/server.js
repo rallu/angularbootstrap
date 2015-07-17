@@ -1,6 +1,7 @@
 var express = require('express');
 var session = require('express-session');
 var compression = require('compression');
+var path = require('path');
 
 var app = express();
 var servingFolder = "/../public_html"
@@ -27,7 +28,7 @@ app.get("*", function(req, res, next) {
         }
     }
 
-    res.sendFile(__dirname + servingFolder + '/index.html');
+    res.sendFile(path.resolve(__dirname + servingFolder + '/index.html'));
 });
 
 var port = process.env.PORT || 8080;
