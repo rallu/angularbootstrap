@@ -4,7 +4,6 @@ var concat = require('gulp-concat');
 var cssmin = require('gulp-cssmin');
 var uglify = require('gulp-uglify');
 var cheerio = require('gulp-cheerio');
-var clean = require('gulp-clean');
 var ngAnnotate = require('gulp-ng-annotate');
 var sass = require('gulp-sass');
 var htmlmin = require('gulp-htmlmin');
@@ -13,8 +12,9 @@ var pleeease = require('gulp-pleeease');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync');
 var templateCache = require('gulp-angular-templatecache');
-var ngModuleInject = require('gulp-angular-inject-module');
 var gulpAngularExtender = require('gulp-angular-extender');
+var gulpif = require('gulp-if');
+var del = require('del');
 var config = require("./config.json");
 
 var options = {
@@ -45,9 +45,10 @@ gulp.task("bowerCSS", ['clean'], function(){
     }
 });
 
-gulp.task("clean", function() {
-    return gulp.src('./release', {read: false})
-    .pipe(clean());
+gulp.task("clean", function(cb) {
+    del([
+        "./release"
+    ], cb);
 });
 
 gulp.task("copy", ['clean'], function() {
@@ -79,7 +80,7 @@ gulp.task("appJS", ['clean'], function() {
     angularExtenederOptions[options.mainmodulename] = ["templates"];
 
     return domSrc({file: 'public_html/index.html', selector: 'script[src]:not([src^=http]):not([src^=bower])', attribute: 'src'})
-    .pipe(gulpAngularExtender(angularExtenederOptions))
+    .pipe(gulpif(/(.*)app\.js/, gulpAngularExtender(angularExtenederOptions)))
     .pipe(concat("app.js"))
     .pipe(ngAnnotate())
     .pipe(uglify())
